@@ -20,7 +20,7 @@
 
                 <!-- Unit -->
                 <li class="nav-item">
-                    <a href="#"
+                    <a href="{{ route('admin.unit.index') }}"
                         class="nav-link {{ request()->routeIs('admin.unit.*') ? 'active' : '' }}">
                         <i class="bi bi-house-add-fill me-2"></i> Unit
                     </a>
