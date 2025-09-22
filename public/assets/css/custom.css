@@ -1,0 +1,161 @@
+
+        :root {
+            --primary-color: #1e3a8a;
+            --secondary-color: #60a5fa;
+            --sidebar-bg: #1e293b;
+            --card-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Source Sans 3', sans-serif;
+            background-color: #f1f5f9;
+            
+        }
+
+        .app-sidebar {
+            background: var(--sidebar-bg) !important;
+        }
+
+        .sidebar-menu .nav-link {
+            color: #e2e8f0;
+            transition: background 0.3s;
+            border-radius: 6px;
+            margin: 4px 8px;
+        }
+
+        .sidebar-menu .nav-link:hover {
+            background: var(--secondary-color);
+            color: #ffffff;
+        }
+
+        .small-box {
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+            transition: transform 0.3s;
+        }
+
+        .small-box:hover {
+            transform: translateY(-5px);
+        }
+
+        .card {
+            border: none;
+            border-radius: 8px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .app-header {
+            background: #ffffff !important;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .user-image {
+            border: 2px solid #ffffff;
+        }
+
+        .select2-container--default .select2-selection--single {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            height: 38px;
+            line-height: 38px;
+        }
+
+        .form-control {
+            border-radius: 6px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+
+        
+        .table {
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .badge {
+            padding: 6px 12px;
+            border-radius: 12px;
+        }
+
+        .dataTables_wrapper .dataTables_filter {
+            margin-bottom: 1rem;
+        }
+
+        .dataTables_wrapper .dataTables_filter input {
+            border-radius: 6px;
+            border: 1px solid #ced4da;
+            padding: 0.5rem;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            border-radius: 6px;
+            margin: 0 2px;
+        }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button.current {
+            background: var(--primary-color);
+            border-color: var(--primary-color);
+            color: #ffffff !important;
+        }
+
+        /* Select2 Custom Styling */
+        .select2-container--bootstrap-5 .select2-selection--single {
+            height: 38px; /* Match form-control height */
+            line-height: 38px; /* Vertically center text */
+            padding: 0.375rem 0.75rem; /* Match form-control padding */
+            font-size: 1rem; /* Match form-control font size */
+            border: 1px solid #ced4da; /* Match form-control border */
+            border-radius: 6px; /* Match form-control border-radius */
+            background-color: #fff; /* Match form-control background */
+            transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out; /* Smooth transitions */
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+            line-height: 38px; /* Ensure text is vertically centered */
+            padding-left: 0; /* Remove extra padding */
+            color: #495057; /* Match form-control text color */
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow {
+            height: 38px; /* Match input height */
+            width: 30px; /* Adjust arrow width */
+            right: 8px; /* Position arrow */
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single .select2-selection__arrow b {
+            border-color: #6c757d transparent transparent transparent; /* Arrow color */
+            border-width: 5px 5px 0 5px; /* Arrow size */
+        }
+
+        .select2-container--bootstrap-5 .select2-selection--single:focus {
+            border-color: #80bdff; /* Match form-control focus border */
+            outline: 0; /* Remove default outline */
+            box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25); /* Match form-control focus shadow */
+        }
+
+        /* Dropdown menu styling */
+        .select2-container--bootstrap-5 .select2-dropdown {
+            border: 1px solid #ced4da; /* Match form-control border */
+            border-radius: 6px; /* Match form-control border-radius */
+            box-shadow: var(--card-shadow); /* Match card shadow */
+        }
+
+        .select2-container--bootstrap-5 .select2-results__option {
+            padding: 0.375rem 0.75rem; /* Match form-control padding */
+            font-size: 1rem; /* Match form-control font size */
+            color: #495057; /* Match form-control text color */
+        }
+
+        .select2-container--bootstrap-5 .select2-results__option--highlighted {
+            background-color: var(--primary-color); /* Match primary color */
+            color: #fff; /* White text for highlighted option */
+        }
+
+        /* Ensure dropdown width matches input */
+        .select2-container--bootstrap-5 .select2-dropdown {
+            min-width: 100% !important; /* Match input width */
+        }
+
