@@ -21,4 +21,23 @@ class UnitCreateController extends Controller
     return view('admin.unit.index', compact('units'));
       
     }
+
+    public function create(){
+        return view('admin.unit.create');
+    }
+
+    public function store(Request $request){
+    $request->validate([
+        'name' => ['required', 'string'],
+        'address' => ['required', 'string'],
+    ]);
+
+    Unit::create([
+        'name' => $request->name,
+        'address' => $request->address,
+    ]);
+
+    return redirect()->route('admin.unit.index')
+        ->with('success', 'Unit created successfully!');
+}
 }

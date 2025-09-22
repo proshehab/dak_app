@@ -18,10 +18,19 @@
         <h2 class="text-center mb-4"> <strong>Unit Registration</strong></h2>
         <form method="POST" action="{{ route('unit.Unitregister') }}">
             @csrf
-            <div class="mb-3">
+           <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
-                <input type="text" class="form-control" id="fullName" name="name" placeholder="Enter full name" required>
+                <select class="form-control" id="fullName" name="name" required>
+                    <option value="" style="display: none" disabled selected>-- Select Unit --
+                    </option>
+                     @foreach ($units as $unit)
+                        <option value="{{ $unit->id }}"> {{ $unit->name }} </option>
+                    @endforeach
+                </select>
+
+                                           
             </div>
+
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
                 <input type="email" class="form-control" id="email" placeholder="Enter email" required>

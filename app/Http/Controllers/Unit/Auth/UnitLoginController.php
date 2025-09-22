@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Unit\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Unit;
 
 class UnitLoginController extends Controller
 {
@@ -12,7 +13,8 @@ class UnitLoginController extends Controller
     }
 
     public function showRegisterForm(){
-        return view('unit.auth.register');
+         $units = Unit::all();
+        return view('unit.auth.register', compact('units'));
     }
 
     public function register(Request $request){
