@@ -21,8 +21,9 @@
            <div class="mb-3">
                 <label for="name" class="form-label">Name</label>
                 <select class="form-control" id="fullName" name="name" required>
-                    <option value="" style="display: none" disabled selected>-- Select Unit --
-                    </option>
+                  <option value="" style="display: none" disabled {{ old('unit_id', $selectedUnit ?? '') == '' ? 'selected' : '' }}>
+                     -- Select Unit --
+                </option>
                      @foreach ($units as $unit)
                         <option value="{{ $unit->id }}"> {{ $unit->name }} </option>
                     @endforeach
