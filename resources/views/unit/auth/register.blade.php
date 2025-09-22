@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Register</title>
+    <title>Unit Registration | DAK Management System</title>
     <!-- Fonts -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource/source-sans-3@5.0.12/index.css" integrity="sha256-tXJfXfp6Ewt1ilPzLDtQnJV4hclT9XuaZUKyUvmyr+Q=" crossorigin="anonymous">
     <!-- Bootstrap -->
@@ -14,7 +14,8 @@
 </head>
 <body>
     <div class="register-container">
-        <h2 class="text-center mb-4">Register</h2>
+         <h3 class="text-center mb-4">DAK Management System</h3>
+        <h2 class="text-center mb-4"> <strong>Unit Registration</strong></h2>
         <form method="POST" action="{{ route('unit.Unitregister') }}">
             @csrf
             <div class="mb-3">
