@@ -47,7 +47,7 @@ return [
 
         'unit' => [
             'driver' => 'session',
-            'provider' => 'units',
+            'provider' => 'unit_users',
         ],
     ],
 
@@ -79,9 +79,9 @@ return [
             'model' => App\Models\User::class,
         ],
 
-        'units' => [
+        'unit_users' => [
             'driver' => 'eloquent',
-            'model' => App\Models\User::class,
+            'model' => App\Models\UnitUser::class,
         ],
 
         // 'users' => [

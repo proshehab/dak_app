@@ -22,6 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
 // Unit Authentication Routes
 Route::prefix('unit')->name('unit.')->group(function () {
     Route::get('login', [UnitLoginController::class, 'showUnitLoginForm'])->name('Unitlogin');
+    Route::post('login', [UnitLoginController::class, 'unitlogin'])->name('Unitlogin');
     Route::get('register', [UnitLoginController::class, 'showRegisterForm'])->name('Unitregister');
     Route::post('register', [UnitLoginController::class, 'register']);
     Route::get('logout', [UnitLoginController::class, 'logout'])->name('Unitlogout');

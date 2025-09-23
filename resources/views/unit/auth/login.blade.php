@@ -29,7 +29,7 @@
         <form method="POST" action="{{ route('unit.Unitlogin') }}">
             @csrf
             <div class="mb-3">
-                <label for="username" class="form-label">Email :</label>
+                <label for="email" class="form-label">Email :</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-envelope"></i></span>
                     <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"

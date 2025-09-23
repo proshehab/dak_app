@@ -16,36 +16,41 @@
     <div class="register-container">
          <h3 class="text-center mb-4">DAK Management System</h3>
         <h2 class="text-center mb-4"> <strong>Unit Registration</strong></h2>
-        <form method="POST" action="{{ route('unit.Unitregister') }}">
-            @csrf
-           <div class="mb-3">
-                <label for="name" class="form-label">Name</label>
-                <select class="form-control" id="fullName" name="name" required>
-                  <option value="" style="display: none" disabled {{ old('unit_id', $selectedUnit ?? '') == '' ? 'selected' : '' }}>
-                     -- Select Unit --
+     <form method="POST" action="{{ route('unit.Unitregister') }}">
+    @csrf
+    <div class="mb-3">
+        <label for="unit_id" class="form-label">Unit</label>
+        <select class="form-control" id="unit_id" name="unit_id" required>
+            <option value="" disabled selected>-- Select Unit --</option>
+            @foreach ($units as $unit)
+                <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
+                    {{ $unit->name }}
                 </option>
-                     @foreach ($units as $unit)
-                        <option value="{{ $unit->id }}"> {{ $unit->name }} </option>
-                    @endforeach
-                </select>
+            @endforeach
+        </select>
+    </div>
 
-                                           
-            </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email"
+               value="{{ old('email') }}" placeholder="Enter email" required>
+    </div>
 
-            <div class="mb-3">
-                <label for="email" class="form-label">Email</label>
-                <input type="email" class="form-control" id="email" placeholder="Enter email" required>
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" placeholder="Enter password" required>
-            </div>
-            <div class="mb-3">
-                <label for="confirmPassword" class="form-label">Confirm Password</label>
-                <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm password" required>
-            </div>
-            <button type="submit" class="btn btn-primary w-100">Register</button>
-        </form>
+    <div class="mb-3">
+        <label for="password" class="form-label">Password</label>
+        <input type="password" class="form-control" id="password" name="password"
+               placeholder="Enter password" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="confirmPassword" class="form-label">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPassword"
+               name="password_confirmation" placeholder="Confirm password" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary w-100">Register</button>
+</form>
+
         <p class="text-center mt-3">
             Already have an account? <a href="{{ route('unit.Unitlogin') }}">Login</a>
         </p>
