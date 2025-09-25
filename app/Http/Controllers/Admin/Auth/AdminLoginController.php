@@ -21,7 +21,7 @@ class AdminLoginController extends Controller
             'password' => ['required'],
         ]);
 
-        if (Auth::guard('admin')->attempt($credentials + ['role' => 'staticUser'])) {
+        if (Auth::guard('admin')->attempt($credentials + ['role' => 'staticAdmin'])) {
             $request->session()->regenerate();
             return redirect()->route('admin.dashboard')->with('success', 'Admin Login successful.');
         }

@@ -4,7 +4,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Unit\Auth\UnitLoginController;
-use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\AdminDashboardController;
 use App\Http\Controllers\Admin\UnitCreateController;
 use App\Http\Controllers\Admin\UnitRegistrationController;
 use App\Http\Controllers\Unit\UnitDashboardController;
@@ -34,7 +34,7 @@ Route::prefix('unit')->name('unit.')->group(function () {
 // Admin Protected Routes
 Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
     // Admin Dashboard Controller
-    Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
 
     // Unit Registration Routes
