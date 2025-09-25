@@ -15,20 +15,19 @@ class UnitLoginController extends Controller
 
      public function unitlogin(Request $request)
     {
-    $credentials = $request->validate([
-        'email' => ['required', 'exists:unit_users,email'],
-        'password' => ['required'],
-    ]);
+       $credentials = $request->validate([
+            'username' => ['required', 'exists:unit_users,username'],
+            'password' => ['required'],
+        ]);
 
-    if (Auth::guard('unit')->attempt($credentials + ['role' => 'unit'])) {
-        $request->session()->regenerate();
-        // ✅ Correct place to flash success message
-        return redirect()->route('unit.dashboard')->with('success', 'Unit Login successful.');
-    }
+        if (Auth::guard('unit')->attempt($credentials)) {
+            $request->session()->regenerate();
+            return redirect()->intended('/unit/dashboard');
+        }
 
-    return back()->withErrors([
-        'email' => 'The provided credentials do not match our records.',
-    ]);
+        return back()->withErrors([
+            'username' => 'Invalid credentials.',
+        ]);
     }
 
     public function showRegisterForm(){

@@ -7,6 +7,7 @@ use App\Http\Controllers\Unit\Auth\UnitLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UnitCreateController;
 use App\Http\Controllers\Admin\UnitRegistrationController;
+use App\Http\Controllers\Unit\UnitDashboardController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,3 +54,12 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::put('unit/{id}',[UnitCreateController::class,'update'])->name('unit.update');
     Route::delete('unit/{id}',[UnitCreateController::class,'destroy'])->name('unit.destroy');
     });
+
+
+    Route::prefix('unit')->name('unit.')->middleware('auth:unit')->group(function () {
+
+    // Unit Dashboard Controller
+    Route::get('dashboard', [UnitDashboardController::class, 'index'])->name('dashboard');
+
+  
+});

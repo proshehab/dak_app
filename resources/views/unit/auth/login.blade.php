@@ -28,19 +28,19 @@
         <h2 class="text-center mb-4"> <strong>Unit Login</strong></h2>
         <form method="POST" action="{{ route('unit.Unitlogin') }}">
             @csrf
-            <div class="mb-3">
-                <label for="email" class="form-label">Email :</label>
+           <div class="mb-3">
+                <label for="username" class="form-label">Username :</label>
                 <div class="input-group">
-                    <span class="input-group-text"><i class="bi bi-envelope"></i></span>
-                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
-                        value="{{ old('email') }}" autocomplete="email" autofocus
-                        class="form-control @error('email') is-invalid @enderror" id="email"
-                        placeholder="Enter email">
+                    <span class="input-group-text"><i class="bi bi-person"></i></span>
+                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
+                        value="{{ old('username') }}" autocomplete="username" autofocus id="username"
+                        placeholder="Enter username">
                 </div>
-                @error('email')
+                @error('username')
                     <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
+
             <div class="mb-3">
                 <label for="password" class="form-label">Password :</label>
                 <div class="input-group">

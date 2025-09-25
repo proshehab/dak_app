@@ -29,7 +29,7 @@
                 <!-- Unit Registration -->
                 <li class="nav-item">
                     <a href="{{ route('admin.unitRegistration.index') }}"
-                        class="nav-link {{ request()->routeIs('admin.customers.*') ? 'active' : '' }}">
+                        class="nav-link {{ request()->routeIs('admin.unitRegistration.*') ? 'active' : '' }}">
                         <i class="bi bi-person-plus-fill me-2"></i> Unit Registration
                     </a>
                 </li>

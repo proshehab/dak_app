@@ -29,22 +29,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($customers as $key => $customer)
+                    @foreach ($units as $key => $unit)
                         <tr>
                             <td>{{ ++$key }}</td>
-                            <td>{{ $customer->name }}</td>
-                            <td>{{ $customer->username }}</td>
-                            <td>{{ $customer->password }}</td>
+                            <td>{{ $unit->name }}</td>
+                            <td>{{ $unit->username }}</td>
+                            <td>{{ $unit->password }}</td>
 
                             <td>
-                                <a href="{{ route('admin.customers.edit', $customer->id) }}"
+                                <a href="{{ route('admin.unitRegistration.edit', $unit->id) }}"
                                     class="btn btn-sm btn-warning">Edit</a>
-                                <form action="{{ route('admin.customers.destroy', $customer->id) }}" method="POST"
+                                <form action="{{ route('admin.unitRegistration.destroy', $unit->id) }}" method="POST"
                                     style="display:inline;">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="btn btn-sm btn-danger"
-                                        onclick="return confirm('Are you sure you want to delete this customer?')">Delete</button>
+                                        onclick="return confirm('Are you sure you want to delete this unit?')">Delete</button>
                                 </form>
                             </td>
                         </tr>
@@ -53,7 +53,7 @@
             </table>
             {{-- Pagination --}}
             <div class="mt-3">
-                {{ $customers->links('pagination::bootstrap-5') }}
+                {{ $units->links('pagination::bootstrap-5') }}
             </div>
         </div>
     </div>
