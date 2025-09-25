@@ -139,7 +139,7 @@
     <!-- AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-beta1/dist/css/adminlte.min.css">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="{{ asset('unit') }}/css/custom.css">
+    <link rel="stylesheet" href="{{ asset('assets') }}/css/custom.css">
     <!-- iziToast CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
 </head>

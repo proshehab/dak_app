@@ -54,6 +54,14 @@ class UnitLoginController extends Controller
     return redirect()->route('unit.Unitlogin')->with('success', 'Registration successful!');
 }
 
+    public function logout(Request $request)
+    {
+        Auth::guard('unit')->logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect('/unit/login');
+    }
+
 
 
 }
