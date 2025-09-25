@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Unit\Auth\UnitLoginController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\UnitCreateController;
+use App\Http\Controllers\Admin\UnitRegistrationController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -35,8 +36,16 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 
+    // Unit Registration Routes
+    Route::get('unitRegistration', [UnitRegistrationController::class, 'index'])->name('unitRegistration.index');
+    Route::get('unitRegistration/create', [UnitRegistrationController::class, 'create'])->name('unitRegistration.create');
+    Route::post('unitRegistration', [UnitRegistrationController::class, 'store'])->name('unitRegistration.store');
+    Route::get('unitRegistration/{id}/edit', [UnitRegistrationController::class, 'edit'])->name('unitRegistration.edit');
+    Route::put('unitRegistration/{id}', [UnitRegistrationController::class, 'update'])->name('unitRegistration.update');
+    Route::delete('unitRegistration/{id}', [UnitRegistrationController::class, 'destroy'])->name('unitRegistration.destroy');
 
-        //UnitController
+
+    //UnitController
     Route::get('unit',[UnitCreateController::class,'index'])->name('unit.index');
     Route::get('unit/create',[UnitCreateController::class,'create'])->name('unit.create');
     Route::post('unit',[UnitCreateController::class,'store'])->name('unit.store');
