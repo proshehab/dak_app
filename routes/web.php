@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\Auth\AdminLoginController;
 use App\Http\Controllers\Unit\Auth\UnitLoginController;
 use App\Http\Controllers\Admin\AdminDashboardController;
+use App\Http\Controllers\Admin\DakCreateController;
 use App\Http\Controllers\Admin\UnitCreateController;
 use App\Http\Controllers\Admin\UnitRegistrationController;
 use App\Http\Controllers\Unit\UnitDashboardController;
@@ -37,6 +38,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::get('dashboard', [AdminDashboardController::class, 'index'])->name('dashboard');
 
 
+    //UnitController
+    Route::get('unit',[UnitCreateController::class,'index'])->name('unit.index');
+    Route::get('unit/create',[UnitCreateController::class,'create'])->name('unit.create');
+    Route::post('unit',[UnitCreateController::class,'store'])->name('unit.store');
+    Route::get('unit/{id}/edit',[UnitCreateController::class,'edit'])->name('unit.edit');
+    Route::put('unit/{id}',[UnitCreateController::class,'update'])->name('unit.update');
+    Route::delete('unit/{id}',[UnitCreateController::class,'destroy'])->name('unit.destroy');
+
     // Unit Registration Routes
     Route::get('unitRegistration', [UnitRegistrationController::class, 'index'])->name('unitRegistration.index');
     Route::get('unitRegistration/create', [UnitRegistrationController::class, 'create'])->name('unitRegistration.create');
@@ -45,14 +54,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::put('unitRegistration/{id}', [UnitRegistrationController::class, 'update'])->name('unitRegistration.update');
     Route::delete('unitRegistration/{id}', [UnitRegistrationController::class, 'destroy'])->name('unitRegistration.destroy');
 
+    // Dak Create Routes
+    Route::get('dakCreate',[DakCreateController::class,'index'])->name('dakCreate.index');
+    Route::get('dakCreate/create',[DakCreateController::class,'create'])->name('dakCreate.create');
+    Route::post('dakCreate',[DakCreateController::class,'store'])->name('dakCreate.store');
+    Route::get('dakCreate/{id}/edit',[DakCreateController::class,'edit'])->name('dakCreate.edit');
+    Route::put('dakCreate/{id}',[DakCreateController::class,'update'])->name('dakCreate.update');
+    Route::delete('dakCreate/{id}',[DakCreateController::class,'destroy'])->name('dakCreate.destroy');
 
-    //UnitController
-    Route::get('unit',[UnitCreateController::class,'index'])->name('unit.index');
-    Route::get('unit/create',[UnitCreateController::class,'create'])->name('unit.create');
-    Route::post('unit',[UnitCreateController::class,'store'])->name('unit.store');
-    Route::get('unit/{id}/edit',[UnitCreateController::class,'edit'])->name('unit.edit');
-    Route::put('unit/{id}',[UnitCreateController::class,'update'])->name('unit.update');
-    Route::delete('unit/{id}',[UnitCreateController::class,'destroy'])->name('unit.destroy');
     });
 
 

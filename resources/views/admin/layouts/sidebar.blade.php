@@ -34,6 +34,16 @@
                     </a>
                 </li>
 
+                 <!-- Dak Registration -->
+                <li class="nav-item">
+                    <a href="{{ route('admin.dakCreate.index') }}"
+                        class="nav-link {{ request()->routeIs('admin.dakCreate.*') ? 'active' : '' }}">
+                       <i class="nav-icon bi bi-envelope-plus"></i>
+                        <p>Create Letter</p>
+                    </a>
+                </li>
+
+
                 <!-- Received Menu -->
                 <li class="nav-item">
                     <a class="nav-link d-flex justify-content-between align-items-center px-3 {{ request()->routeIs('admin.recevied-confirmation', 'admin.tracking.*') ? 'active' : '' }}"
