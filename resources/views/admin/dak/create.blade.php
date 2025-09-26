@@ -1,9 +1,9 @@
 @extends('admin.layouts.app')
 
 @section('content')
-      <div class="card">
+    <div class="card">
         <div class="card-header"> <strong>Create Letter Details</strong>
-            <a href="#" class="btn btn-primary float-end">Back to List</a>
+            <a href="{{ route('admin.dakCreate.index') }}" class="btn btn-primary float-end">Back to List</a>
         </div>
 
 
@@ -17,17 +17,18 @@
                         <h5><strong>From</strong></h5>
                         <div class="mb-2">
                             <label for="from_name" class="form-label">Name:</label>
-                            <input type="text" name="from_name" class="form-control @error('from_name') is-invalid @enderror"
+                            <input type="text" name="from_name"
+                                class="form-control @error('from_name') is-invalid @enderror"
                                 value="{{ old('from_name') }}">
                             @if ($errors->has('from_name'))
                                 <span class="text-danger">{{ $errors->first('from_name') }}</span>
-                            
                             @endif
                         </div>
 
                         <div class="mb-2">
                             <label for="from_address" class="form-label">Address:</label>
-                            <input type="text" name="from_address" class="form-control @error('from_address') is-invalid @enderror"
+                            <input type="text" name="from_address"
+                                class="form-control @error('from_address') is-invalid @enderror"
                                 value="{{ old('from_address') }}">
                             @if ($errors->has('from_address'))
                                 <span class="text-danger">{{ $errors->first('from_address') }}</span>

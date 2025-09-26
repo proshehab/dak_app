@@ -1,7 +1,6 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
     <div class="sidebar-brand">
-        <a href="#"
-            class="brand-link d-flex flex-column justify-content-center align-items-center">
+        <a href="#" class="brand-link d-flex flex-column justify-content-center align-items-center">
             <span class="brand-text fw-light">Admin Portal</span>
         </a>
     </div>
@@ -34,11 +33,11 @@
                     </a>
                 </li>
 
-                 <!-- Dak Registration -->
+                <!-- Dak Registration -->
                 <li class="nav-item">
-                    <a href="{{ route('admin.dakCreate.index') }}"
+                    <a href="{{ route('admin.dakCreate.create') }}"
                         class="nav-link {{ request()->routeIs('admin.dakCreate.*') ? 'active' : '' }}">
-                       <i class="nav-icon bi bi-envelope-plus"></i>
+                        <i class="nav-icon bi bi-envelope-plus"></i>
                         <p>Create Letter</p>
                     </a>
                 </li>
