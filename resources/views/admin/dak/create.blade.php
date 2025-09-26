@@ -9,7 +9,7 @@
 
         <div class="card-body">
 
-            <form method="POST" action="#">
+            <form method="POST" action="{{ route('admin.dakCreate.store') }}">
                 @csrf
                 <div class="row">
                     <!-- Left Column - From -->

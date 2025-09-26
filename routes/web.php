@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\DakCreateController;
 use App\Http\Controllers\Admin\UnitCreateController;
 use App\Http\Controllers\Admin\UnitRegistrationController;
 use App\Http\Controllers\Unit\UnitDashboardController;
+use App\Http\Controllers\Admin\DakReceivedQRcodeController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -61,6 +62,14 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::get('dakCreate/{id}/edit',[DakCreateController::class,'edit'])->name('dakCreate.edit');
     Route::put('dakCreate/{id}',[DakCreateController::class,'update'])->name('dakCreate.update');
     Route::delete('dakCreate/{id}',[DakCreateController::class,'destroy'])->name('dakCreate.destroy');
+
+
+    // Dak QR Code Controller
+    Route::get('dak-addresses-qrcode/{id}', [DakReceivedQRcodeController::class, 'generate'])->name('qrcode.generate');
+    Route::get('dak-addresses-qrcode/{id}/edit', [DakReceivedQRcodeController::class, 'edit'])->name('qrcode.edit');
+    Route::post('dak-addresses-qrcode/{id}', [DakReceivedQRcodeController::class, 'update'])->name('qrcode.update');
+    Route::post('dak-addresses-qrcode/bulk-delete', [DakReceivedQRcodeController::class, 'bulkDelete'])->name('qrcode.bulkDelete');
+    Route::post('qrcodes/bulk-print', [DakReceivedQRcodeController::class, 'bulkPrint'])->name('qrcode.bulkPrint');
 
     });
 

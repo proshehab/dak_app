@@ -35,9 +35,13 @@
                             <tr>
 
                                 <th>SL</th>
+                                <th>from_name</th>
+
+                                <th>letter_no</th>
+                                <th>to_name</th>
+                                <th>to_address</th>
                                 <th>Date</th>
                                 <th>QR Code</th>
-                                <th>To</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -46,8 +50,15 @@
                             @forelse ($addresses as $key => $address)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $address->barcode }}</td>
+                                    <td>{{ $address->from_name }}</td>
+
+                                    <td>{{ $address->letter_no }}</td>
                                     <td>{{ $address->to_name }}</td>
+                                    <td>{{ $address->to_address }}</td>
+
+                                    <td>{{ $address->date }}</td>
+                                    <td>{{ $address->barcode }}</td>
+
                                     <td>
                                         @if ($address->status === 'pending')
                                             <span class="badge bg-warning text-dark">Pending</span>
@@ -56,7 +67,18 @@
                                         @endif
                                     </td>
                                     <td>
-
+                                        <a href="{{ route('admin.qrcode.generate', $address->id) }}"
+                                            class="btn btn-sm btn-primary">
+                                            <i class="bi bi-eye"></i></a>
+                                        {{-- @if ($address->status == 'rejected')
+                                            <button type="button" class="btn btn-sm btn-outline-danger ms-1 view-remarks"
+                                                data-address-id="{{ $address->id }}" title="View Rejection Reason">
+                                                <i class="bi bi-exclamation-triangle-fill"></i>
+                                            </button>
+                                        @endif --}}
+                                        {{-- <a href="{{ route('unit.addresses.edit', $address->id) }}"
+                                            class="btn btn-sm btn-secondary ms-1">
+                                            <i class="bi bi-pencil-square"></i></a> --}}
                                     </td>
                                 </tr>
                             @empty
