@@ -1,8 +1,7 @@
 <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
 
     <div class="sidebar-brand">
-        <a href="#"
-            class="brand-link d-flex flex-column justify-content-center align-items-center">
+        <a href="#" class="brand-link d-flex flex-column justify-content-center align-items-center">
 
             <span class="brand-text fw-light">Unit Portal</span>
         </a>
@@ -13,32 +12,30 @@
         <nav class="mt-2">
             <ul class="nav sidebar-menu flex-column" data-lte-toggle="treeview" role="menu" data-accordion="false">
                 <li class="nav-item">
-                    <a href="#"
-                        class="nav-link {{ request()->routeIs('unit.dashboard') ? 'active' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('unit.dashboard') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-speedometer2"></i>
                         <p>Dashboard</p>
                     </a>
                 </li>
 
                 <li class="nav-item">
-                    <a href="#"
-                        class="nav-link {{ request()->routeIs('unit.unitperson*') ? 'active' : '' }}">
+                    <a href="#" class="nav-link {{ request()->routeIs('unit.unitperson*') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-person-plus"></i>
                         <p>Unit DR Add</p>
                     </a>
                 </li>
 
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a href="#"
                         class="nav-link {{ request()->routeIs('unit.addresses.index', 'unit.addresses.create', 'unit.barcode.generate') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-envelope-plus"></i>
                         <p>Create Letter</p>
                     </a>
-                </li>
+                </li> --}}
 
                 <li class="nav-item">
-                    <a href="#"
-                        class="nav-link {{ request()->routeIs('unit.addresses.recevied-confirmation', 'unit.tracking.confirmation') ? 'active' : '' }}">
+                    <a href="{{ route('unit.dak.received-confirmation') }}"
+                        class="nav-link {{ request()->routeIs('unit.dak.received-confirmation', 'unit.tracking.confirmation') ? 'active' : '' }}">
                         <i class="nav-icon bi bi-inbox-fill"></i>
                         <p>Received</p>
                     </a>
