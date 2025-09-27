@@ -70,8 +70,7 @@
                                         @endif
                                     </td>
                                     <td>
-                                        <a href="{{ route('unit.tracking.confirmation', $address->id) }}"
-                                            class="btn btn-sm btn-primary">
+                                        <a href="#" class="btn btn-sm btn-primary">
                                             <i class="bi bi-check"></i>
                                         </a>
                                     </td>
@@ -81,7 +80,7 @@
                     </table>
                 </div>
                 <div class="mt-3">
-                    {{ $addresses->links('pagination::bootstrap-5') }}
+                    {{-- {{ $addresses->links('pagination::bootstrap-5') }} --}}
                 </div>
             @else
                 <p>No pending confirmations found.</p>

@@ -8,7 +8,7 @@ class DakAddress extends Model
 {
      protected $fillable = [
         'unit_user_id',
-        'unit_people_id',
+        'unit_person_id',
         'from_name', 'from_address', 'letter_no','security_type',
         'to_name', 'to_address','date',
         'barcode', 'status','remarks'
@@ -16,7 +16,7 @@ class DakAddress extends Model
 
     public function unitUser()
     {
-        return $this->belongsTo(UnitUser::class);
+        return $this->belongsTo(UnitUser::class, 'unit_user_id');
     }
     public function unitPeople()
     {

@@ -37,8 +37,8 @@ class DakCreateController extends Controller
         ]);
 
         DakAddress::create([
-            'unit_user_id' => null,
-            'unit_people_id' => null,
+            'unit_user_id' => Auth::id(),
+            'unit_person_id' => null,
             'from_name' => $request->from_name,
             'from_address' => $request->from_address,
             'security_type' => $request->security_type,
