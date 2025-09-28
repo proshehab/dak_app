@@ -35,11 +35,11 @@
                             <tr>
 
                                 <th>SL</th>
-                                <th>from_name</th>
+                                <th>From Name</th>
 
-                                <th>letter_no</th>
-                                <th>to_name</th>
-                                <th>to_address</th>
+                                <th>Letter No</th>
+                                <th>To Name</th>
+                                <th>To Address</th>
                                 <th>Date</th>
                                 <th>QR Code</th>
                                 <th>Status</th>
