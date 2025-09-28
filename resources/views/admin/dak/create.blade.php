@@ -12,9 +12,29 @@
             <form method="POST" action="{{ route('admin.dakCreate.store') }}">
                 @csrf
                 <div class="row">
+
                     <!-- Left Column - From -->
                     <div class="col-md-6">
                         <h5><strong>From</strong></h5>
+                        <div class="mb-2">
+                            <label for="unit_user_id" class="form-label">Select User:</label>
+                            <select name="unit_user_id" id="unit_user_id"
+                                class="form-select @error('unit_user_id') is-invalid @enderror">
+                                <option value="">Select User</option>
+                                @foreach ($unit_user as $user)
+                                    <option value="{{ $user->id }}" data-unit="{{ $user->unit_id }}"
+                                        {{ old('unit_user_id') == $user->id ? 'selected' : '' }}>
+                                        {{ $user->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+
+                            @error('unit_user_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                        </div>
+
+
                         <div class="mb-2">
                             <label for="from_name" class="form-label">Name:</label>
                             <input type="text" name="from_name"
@@ -36,7 +56,9 @@
                         </div>
                     </div>
 
+
                     <!-- Right Column - To -->
+
                     <div class="col-md-6">
                         <h5><strong>To</strong></h5>
                         <div class="mb-2">
