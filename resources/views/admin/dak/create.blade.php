@@ -17,6 +17,15 @@
                     <div class="col-md-6">
                         <h5><strong>From</strong></h5>
                         <div class="mb-2">
+                            <label for="date" class="form-label">Date:</label>
+                            <input type="date" name="date" class="form-control @error('date') is-invalid @enderror"
+                                value="{{ old('date') }}">
+                            @if ($errors->has('date'))
+                                <span class="text-danger">{{ $errors->first('date') }}</span>
+                            @endif
+                        </div>
+
+                        <div class="mb-2">
                             <label for="unit_user_id" class="form-label">Select User:</label>
                             <select name="unit_user_id" id="unit_user_id"
                                 class="form-select @error('unit_user_id') is-invalid @enderror">
@@ -50,7 +59,8 @@
                             <select name="unit_id" class="form-select @error('unit_id') is-invalid @enderror">
                                 <option value="">Select Name</option>
                                 @foreach ($units as $unit)
-                                    <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
+                                    <option value="{{ $unit->id }}"
+                                        {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
                                         {{ $unit->name }}
                                     </option>
                                 @endforeach
@@ -70,8 +80,9 @@
                                 <span class="text-danger">{{ $errors->first('from_address') }}</span>
                             @endif
                         </div>
-                    </div>
 
+
+                    </div>
 
                     <!-- Right Column - To -->
 
@@ -120,19 +131,13 @@
                                 <span class="text-danger">{{ $errors->first('to_address') }}</span>
                             @endif
                         </div>
-
-                        <div class="mb-2">
-                            <label for="date" class="form-label">Date:</label>
-                            <input type="date" name="date" class="form-control @error('date') is-invalid @enderror"
-                                value="{{ old('date') }}">
-                            @if ($errors->has('date'))
-                                <span class="text-danger">{{ $errors->first('date') }}</span>
-                            @endif
-                        </div>
                     </div>
                 </div>
 
-                <button type="submit" class="btn btn-primary">Submit</button>
+                <div class="mt-3">
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+
             </form>
         </div>
     </div>
