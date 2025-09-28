@@ -31,7 +31,7 @@ class DakCreateController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'from_name' => ['required', 'string'],
+            //'from_name' => ['required', 'string'],
             'from_address' => ['required', 'string'],
             'security_type' => ['required', 'string'],
             'letter_no' => ['required', 'string'],
@@ -44,7 +44,7 @@ class DakCreateController extends Controller
             'unit_user_id' => $request->unit_user_id,
             'unit_id' => $request->unit_id,
             //'unit_person_id' => null,
-            'from_name' => $request->from_name,
+            //'from_name' => $request->from_name,
             'from_address' => $request->from_address,
             'security_type' => $request->security_type,
             'letter_no' => $request->letter_no,

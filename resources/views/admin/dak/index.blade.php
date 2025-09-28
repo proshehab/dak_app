@@ -50,7 +50,7 @@
                             @forelse ($addresses as $key => $address)
                                 <tr>
                                     <td>{{ ++$key }}</td>
-                                    <td>{{ $address->from_name }}</td>
+                                    <td>{{ $address->unit->name }}</td>
 
                                     <td>{{ $address->letter_no }}</td>
                                     <td>{{ $address->to_name }}</td>

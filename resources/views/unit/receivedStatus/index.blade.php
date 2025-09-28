@@ -57,7 +57,7 @@
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $address->barcode }}</td>
                                     <td>{{ $address->letter_no }}</td>
-                                    <td>{{ $address->from_name }}</td>
+                                    <td>{{ $address->unit->name }}</td>
                                     <td>{{ $address->to_name }}</td>
                                     <td>{{ \Carbon\Carbon::parse($address->date)->format('F j, Y') }}</td>
                                     <td>

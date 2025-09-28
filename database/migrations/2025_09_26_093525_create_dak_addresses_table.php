@@ -16,7 +16,7 @@ return new class extends Migration
             $table->foreignId('unit_user_id')->constrained()->onDelete('cascade');
             $table->foreignId('unit_id')->constrained()->onDelete('cascade');
             //$table->foreignId('unit_person_id')->nullable()->constrained()->onDelete('cascade');
-            $table->string('from_name');
+            //$table->string('from_name');
             $table->string('from_address');
             $table->string('security_type');
             $table->string('letter_no');
