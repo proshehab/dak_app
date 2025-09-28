@@ -35,7 +35,7 @@
                         </div>
 
 
-                        <div class="mb-2">
+                        {{-- <div class="mb-2">
                             <label for="from_name" class="form-label">Name:</label>
                             <input type="text" name="from_name"
                                 class="form-control @error('from_name') is-invalid @enderror"
@@ -43,7 +43,23 @@
                             @if ($errors->has('from_name'))
                                 <span class="text-danger">{{ $errors->first('from_name') }}</span>
                             @endif
+                        </div> --}}
+
+                        <div class="mb-2">
+                            <label for="unit_id" class="form-label">Name:</label>
+                            <select name="unit_id" class="form-select @error('unit_id') is-invalid @enderror">
+                                <option value="">Select Name</option>
+                                @foreach ($units as $unit)
+                                    <option value="{{ $unit->id }}" {{ old('unit_id') == $unit->id ? 'selected' : '' }}>
+                                        {{ $unit->name }}
+                                    </option>
+                                @endforeach
+                            </select>
+                            @error('unit_id')
+                                <span class="text-danger">{{ $message }}</span>
+                            @enderror
                         </div>
+
 
                         <div class="mb-2">
                             <label for="from_address" class="form-label">Address:</label>

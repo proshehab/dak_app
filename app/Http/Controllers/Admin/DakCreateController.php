@@ -23,8 +23,8 @@ class DakCreateController extends Controller
     public function create()
     {
         $unit_user = UnitUser::all();
-        $unit = Unit::all();
-        return view('admin.dak.create', compact('unit_user', 'unit'));
+        $units = Unit::all();
+        return view('admin.dak.create', compact('unit_user', 'units'));
     }
 
 
