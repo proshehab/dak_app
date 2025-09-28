@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use App\Models\DakAddress;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Str;
+use App\Models\UnitUser;
+use App\Models\Unit;
 
 class DakCreateController extends Controller
 {
@@ -20,7 +22,9 @@ class DakCreateController extends Controller
 
     public function create()
     {
-        return view('admin.dak.create');
+        $unit_user = UnitUser::all();
+        $unit = Unit::all();
+        return view('admin.dak.create', compact('unit_user', 'unit'));
     }
 
 
@@ -37,8 +41,9 @@ class DakCreateController extends Controller
         ]);
 
         DakAddress::create([
-            'unit_user_id' => Auth::id(),
-            'unit_person_id' => null,
+            'unit_user_id' => $request->unit_user_id,
+            'unit_id' => $request->unit_id,
+            //'unit_person_id' => null,
             'from_name' => $request->from_name,
             'from_address' => $request->from_address,
             'security_type' => $request->security_type,
