@@ -18,7 +18,7 @@ class DakReceivedQRcodeController extends Controller
     {
         $ids = $request->input('ids', []);
         $dakAddresses = DakAddress::whereIn('id', $ids)->get();
-        return view('admin.dak.received.bulk_print', compact('dakAddresses'));
+        return view('admin.dak.received.bulk-print', compact('dakAddresses'));
     }
 
 }

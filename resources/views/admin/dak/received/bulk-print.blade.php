@@ -59,14 +59,15 @@
 
 <body>
     <div class="container">
-        @foreach ($dispatchs as $dispatch)
+        @foreach ($dakAddresses as $dakAddresse)
             <div class="barcode-box">
                 <div class="barcode-content">
-                    {{-- <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($dispatch->date)->format('F j, Y') }}</p> --}}
-                    <p><strong>To:</strong> {{ $dispatch->unit->name }}</p>
-                    <p><strong>L/N:</strong> {{ $dispatch->letter_no }}</p>
-                    <div>{!! QrCode::size(80)->generate($dispatch->barcode) !!}</div>
-                    <p>{{ $dispatch->barcode }}</p>
+                    {{-- <p><strong>Date:</strong> {{ \Carbon\Carbon::parse($dakAddresse->date)->format('F j, Y') }}</p> --}}
+                    <p><strong>Form:</strong> {{ $dakAddresse->unit->name }}</p>
+                    <p><strong>To:</strong> {{ $dakAddresse->to_name }}</p>
+                    <p><strong>L/N:</strong> {{ $dakAddresse->letter_no }}</p>
+                    <div>{!! QrCode::size(80)->generate($dakAddresse->barcode) !!}</div>
+                    <p>{{ $dakAddresse->barcode }}</p>
                 </div>
             </div>
         @endforeach

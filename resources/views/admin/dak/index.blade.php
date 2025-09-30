@@ -26,7 +26,7 @@
             </div>
             <!-- 🔍 End Search Form -->
 
-            <form method="POST" action="#">
+            <form method="POST" action="{{ route('admin.qrcode.bulkPrint') }}" target="_blank">
                 @csrf
 
                 <div class="table-responsive">
