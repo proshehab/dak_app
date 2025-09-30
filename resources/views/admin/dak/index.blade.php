@@ -33,10 +33,9 @@
                     <table class="table">
                         <thead>
                             <tr>
-
+                                <th><input type="checkbox" id="select-all"></th>
                                 <th>SL</th>
                                 <th>From Name</th>
-
                                 <th>Letter No</th>
                                 <th>To Name</th>
                                 <th>To Address</th>
@@ -49,6 +48,7 @@
                         <tbody>
                             @forelse ($addresses as $key => $address)
                                 <tr>
+                                    <td><input type="checkbox" name="ids[]" value="{{ $address->id }}"></td>
                                     <td>{{ ++$key }}</td>
                                     <td>{{ $address->unit->name }}</td>
 
