@@ -14,4 +14,11 @@ class DakReceivedQRcodeController extends Controller
         return view('admin.dakreceivedQRcode.qrcode', compact('dakAddress'));
     }
 
+    public function bulkPrint(Request $request)
+    {
+        $ids = $request->input('ids', []);
+        $dakAddresses = DakAddress::whereIn('id', $ids)->get();
+        return view('admin.dak.received.bulk_print', compact('dakAddresses'));
+    }
+
 }

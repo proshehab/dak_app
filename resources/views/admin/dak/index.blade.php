@@ -92,10 +92,94 @@
                 </div>
 
 
+                <div class="d-flex mt-2">
+                    {{-- ✅ Bulk Print Form (POST) --}}
+                    <form method="POST" action="{{ route('admin.qrcode.bulkPrint') }}" id="bulk-print-form"
+                        target="_blank" class="me-3">
 
+                        @csrf
+                        <button type="submit" class="btn btn-success me-4">
+                            🖨️ Print Selected
+                        </button>
+                    </form>
+
+                    {{-- ✅ Bulk Delete Form (DELETE) --}}
+                    <form method="POST" action="#" id="bulk-delete-form"
+                        onsubmit="return confirm('Are you sure you want to delete the selected addresses?')">
+                        @csrf
+                        @method('DELETE')
+
+                        {{-- Hidden checkboxes will be injected by JavaScript --}}
+                        <button type="submit" class="btn btn-danger me-3">
+                            🗑️ Delete Selected
+                        </button>
+                    </form>
+                </div>
             </form>
-
-
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // JavaScript for 'Select All' checkbox
+        document.getElementById('select-all').onclick = function() {
+            let checkboxes = document.querySelectorAll('input[name="ids[]"]');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+        };
+
+        // Handle View Remarks button click
+        document.querySelectorAll('.view-remarks').forEach(button => {
+            button.addEventListener('click', function() {
+                const addressId = this.getAttribute('data-address-id');
+                const modal = new bootstrap.Modal(document.getElementById('remarksModal'));
+                const remarksContent = document.getElementById('remarksContent');
+
+                // Show modal with loading state
+                remarksContent.innerHTML = '<p>Loading...</p>';
+                modal.show();
+
+
+                .then(response => {
+                        console.log('Response status:', response.status);
+                        console.log('Response headers:', response.headers.get('Content-Type'));
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                console.error('Response text:', text);
+                                throw new Error(`HTTP ${response.status}: ${text}`);
+                            });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        console.log('Response data:', data);
+                        if (data.success) {
+                            remarksContent.innerHTML =
+                                `<p><strong class="text-danger">${data.remarks}</strong></p>`;
+                        } else {
+                            remarksContent.innerHTML = `<p class="text-danger">${data.message}</p>`;
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error fetching remarks:', error);
+                        remarksContent.innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
+                    });
+            });
+        });
+
+        document.querySelector('#bulk-delete-form').addEventListener('submit', function(e) {
+            const selected = document.querySelectorAll('input[name="ids[]"]:checked');
+
+            // Clear previously added
+            this.querySelectorAll('.bulk-delete-checkbox').forEach(el => el.remove());
+
+            selected.forEach(cb => {
+                const clone = document.createElement('input');
+                clone.type = 'hidden';
+                clone.name = 'ids[]';
+                clone.value = cb.value;
+                clone.classList.add('bulk-delete-checkbox');
+                this.appendChild(clone);
+            });
+        });
+    </script>
 @endsection
