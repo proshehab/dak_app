@@ -75,6 +75,7 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
 
       // Admin Tracking Routes
     Route::get('dakTracking', [DakReceivedTrackingController::class, 'index'])->name('tracking.index');
+    Route::post('dakTracking/scan', [DakReceivedTrackingController::class, 'scan'])->name('tracking.scan');
 
     });
 
