@@ -28,7 +28,7 @@
         <h2 class="text-center mb-4"> <strong>Unit Login</strong></h2>
         <form method="POST" action="{{ route('unit.Unitlogin') }}">
             @csrf
-           <div class="mb-3">
+            <div class="mb-3">
                 <label for="username" class="form-label">Username :</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
@@ -60,7 +60,7 @@
                 <i class="bi bi-box-arrow-in-right me-1"></i> Login
             </button>
         </form>
-          <p class="text-center mt-3">
+        <p class="text-center mt-3">
             Don't have an account? <a href="{{ route('unit.Unitregister') }}">Register</a>
         </p>
     </div>

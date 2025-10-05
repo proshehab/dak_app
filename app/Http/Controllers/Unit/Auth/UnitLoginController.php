@@ -25,9 +25,7 @@ class UnitLoginController extends Controller
             return redirect()->intended('/unit/dashboard');
         }
 
-        return back()->withErrors([
-            'username' => 'Invalid credentials.',
-        ]);
+       return redirect()->route('unit.dashboard')->with('success', 'Unit Login successful.');
     }
 
     public function showRegisterForm(){
