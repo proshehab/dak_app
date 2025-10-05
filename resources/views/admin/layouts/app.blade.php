@@ -16,12 +16,11 @@
         integrity="sha256-9kPW/n5nn53j4WMRYAxe9c1rCY96Oogo/MKSVdKzPmI=" crossorigin="anonymous">
     <!-- AdminLTE -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-beta1/dist/css/adminlte.min.css">
+
     <!-- Custom CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/custom.css') }}">
     <!-- iziToast CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
-
-
 </head>
 
 <body class="layout-fixed sidebar-expand-lg">
@@ -42,8 +41,6 @@
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
                             <strong class="d-none d-md-inline"> Unit Name : {{ Auth::user()->name }}</strong>
                         </a>
-
-
                     </li>
 
                 </ul>
@@ -78,14 +75,7 @@
                     Company,Jsr</a>.</strong> All
             rights reserved.
         </footer>
-
-        <!-- 🔝 Scroll to Top Button -->
-        <button type="button" class="btn btn-primary btn-lg rounded-circle shadow scroll-top-button" id="scrollTopBtn">
-            <i class="bi bi-arrow-up"></i>
-        </button>
-
     </div>
-
     <!-- Scripts -->
     <script src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.10.1/browser/overlayscrollbars.browser.es6.min.js"
         integrity="sha256-dghWARbRe2eLlIJ56wNB+b760ywulqK3DzZYEpsg2fQ=" crossorigin="anonymous"></script>
@@ -96,6 +86,7 @@
         integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous">
     </script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@4.0.0-beta1/dist/js/adminlte.min.js"></script>
+
     <!-- Custom Js -->
     <script src="{{ asset('assets/js/custom.js') }}"></script>
 
@@ -143,7 +134,6 @@
             });
         });
     </script>
-
 </body>
 
 </html>
