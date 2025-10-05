@@ -121,48 +121,29 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        // JavaScript for 'Select All' checkbox
         document.getElementById('select-all').onclick = function() {
             let checkboxes = document.querySelectorAll('input[name="ids[]"]');
-            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            checkboxes.forEach(checkbox => {
+                checkbox.checked = this.checked;
+
+                const row = checkbox.closest('tr');
+                if (this.checked) {
+                    row.classList.add('table-active');
+                } else {
+                    row.classList.remove('table-active');
+                }
+            });
         };
 
-        // Handle View Remarks button click
-        document.querySelectorAll('.view-remarks').forEach(button => {
-            button.addEventListener('click', function() {
-                const addressId = this.getAttribute('data-address-id');
-                const modal = new bootstrap.Modal(document.getElementById('remarksModal'));
-                const remarksContent = document.getElementById('remarksContent');
-
-                // Show modal with loading state
-                remarksContent.innerHTML = '<p>Loading...</p>';
-                modal.show();
-
-
-                .then(response => {
-                        console.log('Response status:', response.status);
-                        console.log('Response headers:', response.headers.get('Content-Type'));
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                console.error('Response text:', text);
-                                throw new Error(`HTTP ${response.status}: ${text}`);
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        console.log('Response data:', data);
-                        if (data.success) {
-                            remarksContent.innerHTML =
-                                `<p><strong class="text-danger">${data.remarks}</strong></p>`;
-                        } else {
-                            remarksContent.innerHTML = `<p class="text-danger">${data.message}</p>`;
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error fetching remarks:', error);
-                        remarksContent.innerHTML = `<p class="text-danger">Error: ${error.message}</p>`;
-                    });
+        // Handle individual checkbox click to update row highlighting
+        document.querySelectorAll('input[name="ids[]"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                const row = this.closest('tr');
+                if (this.checked) {
+                    row.classList.add('table-active');
+                } else {
+                    row.classList.remove('table-active');
+                }
             });
         });
 
