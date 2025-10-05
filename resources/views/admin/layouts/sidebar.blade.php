@@ -58,7 +58,7 @@
 
                             <!-- Tracking -->
                             <li class="nav-item">
-                                <a href="#"
+                                <a href="{{ route('admin.tracking.index') }}"
                                     class="nav-link {{ request()->routeIs('admin.tracking.*') ? 'active' : '' }}">
                                     <i class="bi bi-geo-alt-fill me-2"></i> Tracking
                                 </a>
