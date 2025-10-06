@@ -120,12 +120,13 @@
                                         <td>
                                             {{-- <button class="btn btn-sm btn-primary" title="View Confirmation">
                                                 <i class="bi bi-eye"></i>
-                </button> --}}
+                                            </button> --}}
 
                                             <a href="#" class="btn btn-sm btn-primary" title="View Confirmation">
                                                 <i class="bi bi-eye"></i>
                                             </a>
-                                            <form action="#" method="POST" style="display:inline;" class="cancel-form">
+                                            <form action="{{ route('admin.tracking.cancel', $shipment->barcode) }}"
+                                                method="POST" style="display:inline;" class="cancel-form">
                                                 @csrf
                                                 <button type="submit" class="btn btn-sm btn-warning"
                                                     title="Cancel Barcode">
@@ -200,4 +201,365 @@
             </form>
         </div>
     </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        // Handle Bulk Action Form Submission
+        document.getElementById('bulkActionForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const action = e.submitter.id;
+            const form = e.target;
+
+            if (action === 'rejectSelected') {
+                const checked = Array.from(document.querySelectorAll('.shipment-checkbox:checked')).map(cb => cb
+                    .value);
+                if (checked.length === 0) {
+                    alert("Please select at least one shipment to reject.");
+                    return;
+                }
+                // Set shipment IDs in the hidden input
+                document.getElementById('rejectShipmentIds').value = checked.join(',');
+                // Ensure remarks input has the default value (optional, since input is readonly)
+                document.getElementById('remarks').value = 'Unit person does not match.';
+                // Show the modal
+                new bootstrap.Modal(document.getElementById('rejectRemarksModal')).show();
+                return;
+            }
+
+            if (action === 'confirmSelected') {
+                if (!confirm("Are you sure you want to confirm the selected shipments?")) return;
+
+                const formData = new FormData(form);
+                const url = e.submitter.formAction;
+
+                fetch(url, {
+                        method: 'POST',
+                        body: formData,
+                        headers: {
+                            'X-Requested-With': 'XMLHttpRequest',
+                            'Accept': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        alert(data.message);
+                        window.location.reload();
+                    })
+                    .catch(error => {
+                        alert('An error occurred: ' + error.message);
+                    });
+            }
+        });
+
+        // Handle Reject Remarks Form Submission
+        document.getElementById('rejectRemarksForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+
+            // Convert comma-separated shipment IDs to an array for the 'shipments' field
+            const shipmentIds = document.getElementById('rejectShipmentIds').value.split(',');
+            shipmentIds.forEach(id => formData.append('shipments[]', id));
+
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert(data.message);
+                        bootstrap.Modal.getInstance(document.getElementById('rejectRemarksModal')).hide();
+                        window.location.reload();
+                    } else {
+                        alert("Error: " + (data.message || 'Rejection failed.'));
+                    }
+                })
+                .catch(error => {
+                    alert('An error occurred: ' + error.message);
+                });
+        });
+
+        // Show UnitPerson details for a specific shipment
+        function showUnitPersonInfo(shipmentId) {
+            const myModal = new bootstrap.Modal(document.getElementById('drinfoModal'));
+            myModal.show();
+
+            const url = `/admin/tracking/unit-person/${shipmentId}`;
+            fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`HTTP ${response.status}: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    const modalBody = document.getElementById('unitPersonInfo');
+                    modalBody.innerHTML = data.success ? data.html :
+                        '<p class="text-danger">Error loading details.</p>';
+                })
+                .catch(error => {
+                    console.error('Error fetching unit person info:', error);
+                    document.getElementById('unitPersonInfo').innerHTML =
+                        `<p class="text-danger">Error: ${error.message}</p>`;
+                });
+        }
+
+        // Select All Checkbox Logic
+        document.getElementById('selectAll').addEventListener('change', function() {
+            const checkboxes = document.querySelectorAll('.shipment-checkbox');
+            checkboxes.forEach(checkbox => checkbox.checked = this.checked);
+            toggleBulkButtons();
+        });
+
+        // Handle Scan Form Submission
+        document.getElementById('scanForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const messageDiv = document.getElementById('scanMessage');
+
+            fetch(form.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    console.log('Scan Response Status:', response.status);
+                    console.log('Scan Response Headers:', response.headers.get('Content-Type'));
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`HTTP ${response.status}: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('shipmentsTableBody').innerHTML = data.table_body;
+                        messageDiv.innerHTML = `
+                        <div class="alert alert-success alert-dismissible fade show" role="alert">
+                            ${data.message}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+                        const newRows = document.querySelectorAll('#shipmentsTableBody tr');
+                        if (newRows.length > 0) {
+                            newRows[0].classList.add('new-row');
+                            setTimeout(() => newRows[0].classList.add('fade-out'), 1000);
+                        }
+                        form.reset();
+                        document.getElementById('barcodeInput').focus();
+                        attachCheckboxListeners();
+                        attachActionListeners();
+                    } else {
+                        throw new Error(data.errors?.barcode || data.errors?.general || 'Scan failed.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error scanning barcode:', error);
+                    messageDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${error.message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                    document.getElementById('barcodeInput').focus();
+                });
+        });
+
+        // Handle Individual Confirm/Reject/Cancel
+        function attachActionListeners() {
+            document.querySelectorAll(
+                    'form[action*="/admin/tracking/confirm"], form[action*="/admin/tracking/reject"], form.cancel-form')
+                .forEach(form => {
+                    form.removeEventListener('submit', handleActionSubmit);
+                    form.addEventListener('submit', handleActionSubmit);
+                });
+        }
+
+        function handleActionSubmit(e) {
+            e.preventDefault();
+            const form = e.target;
+            const formData = new FormData(form);
+            const url = form.action;
+            const isCancel = form.classList.contains('cancel-form');
+            const messageDiv = document.getElementById('scanMessage');
+
+            console.log(`Submitting ${isCancel ? 'Cancel' : 'Action'} to:`, url);
+
+            fetch(url, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => {
+                    console.log(`${isCancel ? 'Cancel' : 'Action'} Response Status:`, response.status);
+                    console.log(`${isCancel ? 'Cancel' : 'Action'} Response Headers:`, response.headers.get(
+                        'Content-Type'));
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(`HTTP ${response.status}: ${text}`);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Response Data:', data);
+                    if (data.success) {
+                        if (isCancel) {
+                            document.getElementById('shipmentsTableBody').innerHTML = data.table_body;
+                            messageDiv.innerHTML = `
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                ${data.message}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        `;
+                            attachCheckboxListeners();
+                            attachActionListeners();
+                        } else {
+                            alert(data.message);
+                            if (data.redirect) {
+                                window.location.href = data.redirect;
+                            } else {
+                                window.location.reload();
+                            }
+                        }
+                    } else {
+                        messageDiv.innerHTML = `
+                        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                            Error: ${data.errors?.barcode || data.errors?.general || 'Operation failed.'}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                    `;
+                    }
+                })
+                .catch(error => {
+                    console.error(`Error during ${isCancel ? 'cancel' : 'action'}:`, error);
+                    messageDiv.innerHTML = `
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        ${error.message}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                `;
+                });
+        }
+
+        // Show Unit Person Info for Selected Shipment
+        function showSelectedUnitPersonInfo() {
+            const checked = Array.from(document.querySelectorAll('.shipment-checkbox:checked')).map(cb => cb.value);
+
+            if (checked.length === 0) {
+                alert("Please select at least one shipment.");
+                return;
+            }
+
+            // Show the modal
+            const myModal = new bootstrap.Modal(document.getElementById('drinfoModal'));
+            myModal.show();
+
+            // Set shipment IDs in hidden input
+            document.getElementById('modalShipmentIds').value = JSON.stringify(checked);
+
+            // Fetch unit persons and inject into modal
+            const url = `/admin/tracking/unit-person/${checked.join(',')}`;
+            fetch(url, {
+                    method: 'GET',
+                    headers: {
+                        'Accept': 'application/json',
+                        'X-Requested-With': 'XMLHttpRequest',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    const modalBody = document.getElementById('unitPersonInfo');
+                    modalBody.innerHTML = data.success ? data.html :
+                        '<p class="text-danger">Error loading details.</p>';
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('unitPersonInfo').innerHTML =
+                        `<p class="text-danger">Error: ${error.message}</p>`;
+                });
+        }
+
+
+        document.getElementById('unitPersonForm').addEventListener('submit', function(e) {
+            const selectedPersons = document.querySelectorAll('input[name="selected_ids[]"]:checked');
+            const shipmentIds = document.getElementById('modalShipmentIds').value;
+            const errorDiv = document.getElementById('unitPersonError');
+
+            if (!shipmentIds || JSON.parse(shipmentIds).length === 0) {
+                e.preventDefault();
+                errorDiv.textContent = "Shipment data is missing. Please go back and try again.";
+                errorDiv.style.display = 'block';
+                return;
+            }
+
+            if (selectedPersons.length === 0) {
+                e.preventDefault();
+                errorDiv.textContent = "Please select at least one unit person.";
+                errorDiv.style.display = 'block';
+            } else {
+                errorDiv.textContent = "";
+                errorDiv.style.display = 'none';
+            }
+        });
+
+
+        // Function to attach checkbox event listeners
+        function attachCheckboxListeners() {
+            document.querySelectorAll('.shipment-checkbox').forEach(checkbox => {
+                checkbox.removeEventListener('change', checkboxChangeHandler);
+                checkbox.addEventListener('change', checkboxChangeHandler);
+            });
+        }
+
+        function checkboxChangeHandler() {
+            const selectAll = document.getElementById('selectAll');
+            const allCheckboxes = document.querySelectorAll('.shipment-checkbox');
+            selectAll.checked = Array.from(allCheckboxes).every(cb => cb.checked);
+            toggleBulkButtons();
+        }
+
+        // Update toggleBulkButtons to enable/disable View Unit Person button
+        function toggleBulkButtons() {
+            const checkboxes = document.querySelectorAll('.shipment-checkbox');
+            const anyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            const exactlyOneChecked = Array.from(checkboxes).filter(cb => cb.checked).length === 1;
+            document.getElementById('confirmSelected').disabled = !anyChecked;
+            document.getElementById('rejectSelected').disabled = !anyChecked;
+            document.getElementById('viewUnitPerson').disabled = !anyChecked;
+        }
+
+        // Initialize listeners on page load
+        attachCheckboxListeners();
+        attachActionListeners();
+    </script>
 @endsection
