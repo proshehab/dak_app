@@ -99,44 +99,9 @@
                             </tr>
                         </thead>
                         <tbody id="shipmentsTableBody">
-                            @foreach ($shipments as $key => $shipment)
-                                @if (in_array($shipment->barcode, session('scanned_barcodes', [])))
-                                    <tr>
-                                        <td><input type="checkbox" name="shipment_ids[]" value="{{ $shipment->id }}"
-                                                class="shipment-checkbox"></td>
-                                        <td>{{ ++$key }}</td>
-                                        <td>{{ $shipment->user->name ?? 'N/A' }}</td>
-                                        <td>{{ $shipment->barcode }}</td>
-                                        <td>
-                                            @if ($shipment->status == 'received')
-                                                <span class="badge bg-success">{{ ucfirst($shipment->status) }}</span>
-                                            @elseif ($shipment->status == 'pending')
-                                                <span class="badge bg-danger">{{ ucfirst($shipment->status) }}</span>
-                                            @else
-                                                <span
-                                                    class="badge bg-warning text-dark">{{ ucfirst($shipment->status) }}</span>
-                                            @endif
-                                        </td>
-                                        <td>
-                                            {{-- <button class="btn btn-sm btn-primary" title="View Confirmation">
-                                                <i class="bi bi-eye"></i>
-                                            </button> --}}
-
-                                            <a href="#" class="btn btn-sm btn-primary" title="View Confirmation">
-                                                <i class="bi bi-eye"></i>
-                                            </a>
-                                            <form action="{{ route('admin.tracking.cancel', $shipment->barcode) }}"
-                                                method="POST" style="display:inline;" class="cancel-form">
-                                                @csrf
-                                                <button type="submit" class="btn btn-sm btn-warning"
-                                                    title="Cancel Barcode">
-                                                    <i class="bi bi-x-circle"></i>
-                                                </button>
-                                            </form>
-                                        </td>
-                                    </tr>
-                                @endif
-                            @endforeach
+                            @include('admin.dakTracking.partials.unit_person_table', [
+                                'shipments' => $shipments,
+                            ])
                         </tbody>
                     </table>
                 </div>

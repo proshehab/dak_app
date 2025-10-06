@@ -77,6 +77,11 @@ Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function
     Route::get('dakTracking', [DakReceivedTrackingController::class, 'index'])->name('tracking.index');
     Route::post('dakTracking/scan', [DakReceivedTrackingController::class, 'scan'])->name('tracking.scan');
     Route::post('tracking/cancel/{barcode}', [DakReceivedTrackingController::class, 'cancel'])->name('tracking.cancel');
+    Route::post('tracking/confirm/{id}', [DakReceivedTrackingController::class, 'confirm'])->name('tracking.confirm');
+    Route::get('tracking/reject', [DakReceivedTrackingController::class, 'trackingReject'])->name('tracking.reject');
+    Route::post('tracking/bulk-confirm', [DakReceivedTrackingController::class, 'bulkConfirm'])->name('tracking.bulk-confirm');
+    Route::post('tracking/bulk-reject', [DakReceivedTrackingController::class, 'bulkReject'])->name('tracking.bulk-reject');
+    Route::get('tracking/confirmation/{id}', [DakReceivedTrackingController::class, 'confirmation'])->name('tracking.confirmation');
 
     });
 
