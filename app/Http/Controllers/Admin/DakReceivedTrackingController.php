@@ -60,7 +60,7 @@ class DakReceivedTrackingController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-            $tableBody = view('admin.tracking.partials.shipments_table_body', compact('shipments'))->render();
+            $tableBody = view('admin.dakTracking.partials.shipments_table_body', compact('shipments'))->render();
 
             return response()->json([
                 'success' => true,
