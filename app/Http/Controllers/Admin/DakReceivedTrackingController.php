@@ -5,16 +5,18 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DakAddress;
+use App\Models\UnitPeople;
+use Illuminate\Support\Facades\Log;
 
 class DakReceivedTrackingController extends Controller
 {
-    public function index( Request $request)
+    public function index(Request $request)
     {
         $scannedBarcodes = $request->session()->get('scanned_barcodes', []);
         $shipments = DakAddress::with('unitUser')
             ->where(function ($query) use ($scannedBarcodes) {
                 $query->where('status', 'pending')
-                      ->orWhereIn('barcode', $scannedBarcodes);
+                    ->orWhereIn('barcode', $scannedBarcodes);
             })
             ->orderByRaw("FIELD(barcode, '" . implode("','", $scannedBarcodes) . "') DESC")
             ->orderBy('created_at', 'desc')
@@ -24,7 +26,7 @@ class DakReceivedTrackingController extends Controller
     }
 
     public function scan(Request $request)
-        {
+    {
         try {
             $request->validate([
                 'barcode' => ['required', 'string', 'exists:addresses,barcode'],
@@ -38,10 +40,10 @@ class DakReceivedTrackingController extends Controller
                 return response('QR Code not found.', 422);
             }
 
-            $unit_person = UnitPerson::where('user_id', $address->user_id)->first();
+            $unit_person = UnitPeople::where('user_id', $address->user_id)->first();
             if (!$unit_person) {
-                return response('No Unit Person record found for this user.', 422);
-                }
+                return response('No Unit People record found for this user.', 422);
+            }
 
             $scannedBarcodes = $request->session()->get('scanned_barcodes', []);
             if (!in_array($barcode, $scannedBarcodes)) {
@@ -65,7 +67,6 @@ class DakReceivedTrackingController extends Controller
                 'message' => 'QR Code scanned successfully.',
                 'table_body' => $tableBody
             ]);
-
         } catch (\Illuminate\Validation\ValidationException $e) {
             return response($e->validator->errors()->first(), 422);
         } catch (\Exception $e) {
@@ -93,10 +94,10 @@ class DakReceivedTrackingController extends Controller
                 ], 422);
             }
 
-            $shipments = Address::with('user')
+            $shipments = DakAddress::with('user')
                 ->where(function ($query) use ($scannedBarcodes) {
                     $query->where('status', 'pending')
-                          ->orWhereIn('barcode', $scannedBarcodes);
+                        ->orWhereIn('barcode', $scannedBarcodes);
                 })
                 ->orderByRaw("FIELD(barcode, '" . implode("','", $scannedBarcodes) . "') DESC")
                 ->orderBy('created_at', 'desc')
