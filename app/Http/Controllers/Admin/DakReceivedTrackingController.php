@@ -29,7 +29,7 @@ class DakReceivedTrackingController extends Controller
     {
         try {
             $request->validate([
-                'barcode' => ['required', 'string', 'exists:addresses,barcode'],
+                'barcode' => ['required', 'string', 'exists:dak_addresses,barcode'],
                 'location' => ['required', 'string'],
             ]);
 
@@ -40,10 +40,10 @@ class DakReceivedTrackingController extends Controller
                 return response('QR Code not found.', 422);
             }
 
-            $unit_person = UnitPeople::where('user_id', $address->user_id)->first();
-            if (!$unit_person) {
-                return response('No Unit People record found for this user.', 422);
-            }
+            // $unit_person = UnitPeople::where('user_id', $address->user_id)->first();
+            // if (!$unit_person) {
+            //     return response('No Unit People record found for this user.', 422);
+            // }
 
             $scannedBarcodes = $request->session()->get('scanned_barcodes', []);
             if (!in_array($barcode, $scannedBarcodes)) {

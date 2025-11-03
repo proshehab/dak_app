@@ -15,8 +15,6 @@ return new class extends Migration
             $table->id();
             $table->foreignId('unit_user_id')->constrained()->onDelete('cascade');
             $table->foreignId('unit_id')->constrained()->onDelete('cascade');
-            //$table->foreignId('unit_person_id')->nullable()->constrained()->onDelete('cascade');
-            //$table->string('from_name');
             $table->string('from_address');
             $table->string('security_type');
             $table->string('letter_no');
@@ -24,7 +22,8 @@ return new class extends Migration
             $table->string('to_address');
             $table->date('date');
             $table->string('barcode')->unique();
-            $table->enum('status', ['pending', 'received'])->default('pending');
+            $table->enum('status', ['pending', 'received', 'accepted', 'picked', 'in_transit', 'out_for_delivery', 'delivered'])
+                ->default('pending');
             $table->string('remarks')->nullable();
             $table->timestamps();
         });
