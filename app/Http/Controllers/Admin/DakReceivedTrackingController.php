@@ -75,6 +75,9 @@ class DakReceivedTrackingController extends Controller
         }
     }
 
+
+
+
     public function cancel(Request $request, $barcode)
     {
         try {
