@@ -6,16 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Unit;
 use Illuminate\Support\Facades\Auth;
+use App\Models\UnitUser;
 
 class UnitLoginController extends Controller
 {
-    public function showUnitLoginForm(){
+    public function showUnitLoginForm()
+    {
         return view('unit.auth.login');
     }
 
-     public function unitlogin(Request $request)
+    public function unitlogin(Request $request)
     {
-       $credentials = $request->validate([
+        $credentials = $request->validate([
             'username' => ['required', 'exists:unit_users,username'],
             'password' => ['required'],
         ]);
@@ -25,32 +27,35 @@ class UnitLoginController extends Controller
             return redirect()->intended('/unit/dashboard');
         }
 
-       return redirect()->route('unit.dashboard')->with('success', 'Unit Login successful.');
+        return redirect()->route('unit.dashboard')->with('success', 'Unit Login successful.');
     }
 
-    public function showRegisterForm(){
-         $units = Unit::all();
+    public function showRegisterForm()
+    {
+        $units = Unit::all();
         return view('unit.auth.register', compact('units'));
     }
 
     public function register(Request $request)
-{
-    $request->validate([
-        'unit_id' => 'required|exists:units,id',
-        'email' => 'required|string|email|max:255|unique:unit_users,email',
-        'password' => 'required|string|min:8|confirmed',
-    ]);
+    {
+        $request->validate([
+            'unit_id' => 'required|exists:units,id',
+            'email' => 'required|string|email|max:255|unique:unit_users,email',
+            'phone' => 'required|string|max:15',
+            'password' => 'required|string|min:8|confirmed',
+        ]);
 
-    $user = \App\Models\UnitUser::create([
-        'unit_id' => $request->unit_id,
-        'email' => $request->email,
-        'password' => bcrypt($request->password),
-    ]);
+        $user = UnitUser::create([
+            'unit_id' => $request->unit_id,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'password' => bcrypt($request->password),
+        ]);
 
-    // auth()->guard('unit')->login($user); // If you want auto-login
+        // auth()->guard('unit')->login($user); // If you want auto-login
 
-    return redirect()->route('unit.Unitlogin')->with('success', 'Registration successful!');
-}
+        return redirect()->route('unit.Unitlogin')->with('success', 'Registration successful!');
+    }
 
     public function logout(Request $request)
     {
@@ -59,7 +64,4 @@ class UnitLoginController extends Controller
         $request->session()->regenerateToken();
         return redirect('/unit/login');
     }
-
-
-
 }
