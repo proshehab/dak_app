@@ -29,15 +29,14 @@
         <form method="POST" action="{{ route('unit.Unitlogin') }}">
             @csrf
             <div class="mb-3">
-                <label for="username" class="form-label">Username :</label>
+                <label for="username" class="form-label">Email :</label>
                 <div class="input-group">
                     <span class="input-group-text"><i class="bi bi-person"></i></span>
-                    <input type="text" name="username" class="form-control @error('username') is-invalid @enderror"
-                        value="{{ old('username') }}" autocomplete="username" autofocus id="username"
-                        placeholder="Enter username">
+                    <input type="text" name="email" class="form-control @error('email') is-invalid @enderror"
+                        value="{{ old('email') }}" autocomplete="email" autofocus id="email" placeholder="Enter email">
                 </div>
-                @error('username')
-                    <div class="text-danger">{{ $message }}</div>
+                @error('email')
+                <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
 
@@ -49,7 +48,7 @@
                         id="password" placeholder="Enter password">
                 </div>
                 @error('password')
-                    <div class="text-danger">{{ $message }}</div>
+                <div class="text-danger">{{ $message }}</div>
                 @enderror
             </div>
             <div class="mb-3 form-check">

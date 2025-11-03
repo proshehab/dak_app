@@ -11,7 +11,7 @@ class UnitUser extends Authenticatable
 
     protected $fillable = [
         'unit_id',
-        'eamil',
+        'email',
         'phone',
         'password',
         'status',

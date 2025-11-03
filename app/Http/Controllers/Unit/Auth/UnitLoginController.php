@@ -18,7 +18,7 @@ class UnitLoginController extends Controller
     public function unitlogin(Request $request)
     {
         $credentials = $request->validate([
-            'username' => ['required', 'exists:unit_users,username'],
+            'email' => ['required', 'exists:unit_users,email'],
             'password' => ['required'],
         ]);
 
