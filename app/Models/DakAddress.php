@@ -10,8 +10,8 @@ class DakAddress extends Model
         'unit_user_id',
         'unit_id',
         'from_address',
-        'letter_no',
         'security_type',
+        'letter_no',
         'to_name',
         'to_address',
         'date',
@@ -22,14 +22,19 @@ class DakAddress extends Model
 
     public function unitUser()
     {
-        return $this->belongsTo(UnitUser::class, 'unit_user_id');
+        return $this->belongsTo(UnitUser::class);
     }
     public function unit()
     {
-        return $this->belongsTo(Unit::class, 'unit_id');
+        return $this->belongsTo(Unit::class);
     }
-    public function unitPeople()
+    public function tracks()
     {
-        return $this->belongsToMany(UnitPeople::class, 'unit_people_dak_address', 'dak_address_id', 'unit_people_id');
+        return $this->hasMany(DakTrack::class)->orderBy('scanned_at');
+    }
+
+    public function getCurrentStatus()
+    {
+        return $this->tracks()->latest()->first()?->status ?? $this->status;
     }
 }

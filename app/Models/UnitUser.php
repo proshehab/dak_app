@@ -10,11 +10,22 @@ class UnitUser extends Authenticatable
     use Notifiable;
 
     protected $fillable = [
+        'unit_id',
         'name',
-        'username',
-        'email',
+        'eamil',
+        'phone',
         'password',
+        'status',
     ];
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
+    public function daks()
+    {
+        return $this->hasMany(DakAddress::class);
+    }
 
     protected $hidden = [
         'password',
