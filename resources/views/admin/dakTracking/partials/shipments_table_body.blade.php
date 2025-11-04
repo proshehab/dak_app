@@ -15,15 +15,13 @@
         @endif
     </td>
     <td>
-        <form action="{{ route('admin.dispatch.tracking.confirm', $shipment->id) }}" method="POST"
-            style="display:inline;">
+        <form action="#" method="POST" style="display:inline;">
             @csrf
             {{-- <button type="submit" class="btn btn-sm btn-success" title="Confirm">
                 <i class="bi bi-check"></i>
             </button> --}}
         </form>
-        <form action="{{ route('admin.dispatch.tracking.reject', $shipment->id) }}" method="POST"
-            style="display:inline;">
+        <form action="#" method="POST" style="display:inline;">
             @csrf
             {{-- <button type="submit" class="btn btn-sm btn-danger" title="Reject">
                 <i class="bi bi-x"></i>
@@ -45,7 +43,6 @@
                 <i class="bi bi-x-circle"></i>
             </button>
         </form>
-    </td>
 </tr>
 @endif
 @endforeach
