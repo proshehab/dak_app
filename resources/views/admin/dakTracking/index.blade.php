@@ -77,7 +77,8 @@
         <form id="bulkActionForm" method="POST">
             @csrf
             <div class="mb-3">
-                <button type="submit" formaction="#" class="btn btn-success" id="confirmSelected" disabled>Confirm
+                <button type="submit" formaction="{{ route('admin.tracking.bulk-confirm') }}" class="btn btn-success"
+                    id="confirmSelected" disabled>Confirm
                     Selected</button>
                 <button type="submit" formaction="#" class="btn btn-danger" id="rejectSelected" disabled>Reject
                     Selected</button>
@@ -185,12 +186,12 @@
                     return;
                 }
                 // Set shipment IDs in the hidden input
-                document.getElementById('rejectShipmentIds').value = checked.join(',');
-                // Ensure remarks input has the default value (optional, since input is readonly)
-                document.getElementById('remarks').value = 'Unit person does not match.';
-                // Show the modal
-                new bootstrap.Modal(document.getElementById('rejectRemarksModal')).show();
-                return;
+                // document.getElementById('rejectShipmentIds').value = checked.join(',');
+                // // Ensure remarks input has the default value (optional, since input is readonly)
+                // document.getElementById('remarks').value = 'Unit person does not match.';
+                // // Show the modal
+                // new bootstrap.Modal(document.getElementById('rejectRemarksModal')).show();
+                // return;
             }
 
             if (action === 'confirmSelected') {

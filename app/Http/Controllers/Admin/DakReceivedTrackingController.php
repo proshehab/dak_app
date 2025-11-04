@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\DakAddress;
-use App\Models\UnitPeople;
+use App\Models\DakTrack;
 use Illuminate\Support\Facades\Log;
 
 class DakReceivedTrackingController extends Controller
@@ -76,6 +76,105 @@ class DakReceivedTrackingController extends Controller
     }
 
 
+    public function confirm($id)
+    {
+        try {
+            $address = DakAddress::findOrFail($id);
+            //$unit_person = UnitPerson::where('user_id', $address->user_id)->first();
+
+            // if (!$unit_person) {
+            //     return response()->json([
+            //         'success' => false,
+            //         'errors' => ['barcode' => 'No Unit Person record found for this user.']
+            //     ], 422);
+            // }
+
+            $scan = DakTrack::create([
+                'dak_address_id' => $address->id,
+                //'unit_person_id' => $unit_person->id,
+                'barcode' => $address->barcode,
+                'location' => 'SSC JSR',
+                'status' => 'received',
+                'scanned_by' => auth()->guard('admin')->id(),
+            ]);
+
+            $address->update(['status' => 'received']);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Barcode confirmed successfully.',
+                'redirect' => route('admin.tracking.confirmation', $scan->id)
+            ]);
+        } catch (\Exception $e) {
+            Log::error('Confirm error: ' . $e->getMessage(), ['id' => $id]);
+            return response()->json([
+                'success' => false,
+                'errors' => ['barcode' => 'An error occurred while confirming the QR Code.']
+            ], 500);
+        }
+    }
+
+
+    public function bulkConfirm(Request $request)
+    {
+        try {
+            $request->validate([
+                'shipment_ids' => ['required', 'array'],
+                'shipment_ids.*' => ['exists:addresses,id'],
+            ]);
+
+            $shipmentIds = $request->input('shipment_ids');
+            $errors = [];
+            $successCount = 0;
+
+            foreach ($shipmentIds as $id) {
+                $address = DakAddress::find($id);
+                if (!$address) {
+                    $errors[] = "Shipment ID $id not found.";
+                    continue;
+                }
+
+                // $unit_person = UnitPerson::where('user_id', $address->user_id)->first();
+                // if (!$unit_person) {
+                //     $errors[] = "No Unit Person record found for shipment ID $id.";
+                //     continue;
+                // }
+
+                DakTrack::create([
+                    'dak_address_id' => $address->id,
+                    //'unit_person_id' => $unit_person->id,
+                    'barcode' => $address->barcode,
+                    'location' => 'SSC JSR',
+                    'status' => 'received',
+                    'scanned_by' => auth()->guard('admin')->id(),
+                ]);
+
+
+                $address->update(['status' => 'received']);
+                $successCount++;
+            }
+
+            $request->session()->forget('scanned_barcodes');
+
+            if ($successCount > 0) {
+                return response()->json([
+                    'success' => true,
+                    'message' => "$successCount shipment(s) confirmed successfully."
+                ]);
+            }
+
+            return response()->json([
+                'success' => false,
+                'errors' => $errors
+            ], 422);
+        } catch (\Exception $e) {
+            Log::error('Bulk confirm error: ' . $e->getMessage(), ['shipment_ids' => $request->input('shipment_ids')]);
+            return response()->json([
+                'success' => false,
+                'errors' => ['general' => 'An error occurred while confirming shipments.']
+            ], 500);
+        }
+    }
 
 
     public function cancel(Request $request, $barcode)
@@ -97,7 +196,7 @@ class DakReceivedTrackingController extends Controller
                 ], 422);
             }
 
-            $shipments = DakAddress::with('user')
+            $shipments = DakAddress::with('unitUser')
                 ->where(function ($query) use ($scannedBarcodes) {
                     $query->where('status', 'pending')
                         ->orWhereIn('barcode', $scannedBarcodes);
@@ -106,7 +205,7 @@ class DakReceivedTrackingController extends Controller
                 ->orderBy('created_at', 'desc')
                 ->paginate(10);
 
-            $tableBody = view('admin.tracking.partials.shipments_table_body', compact('shipments'))->render();
+            $tableBody = view('admin.dakTracking.partials.shipments_table_body', compact('shipments'))->render();
 
             return response()->json([
                 'success' => true,

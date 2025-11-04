@@ -3,7 +3,7 @@
 <tr>
     <td><input type="checkbox" name="shipment_ids[]" value="{{ $shipment->id }}" class="shipment-checkbox"></td>
     <td>{{ ++$key }}</td>
-    <td>{{ $shipment->user->name ?? 'N/A' }}</td>
+    <td>{{ $shipment->unitUser->name ?? 'N/A' }}</td>
     <td>{{ $shipment->barcode }}</td>
     <td>
         @if ($shipment->status == 'received')
@@ -15,11 +15,11 @@
         @endif
     </td>
     <td>
-        <form action="#" method="POST" style="display:inline;">
+        <form action="{{ route('admin.tracking.confirm', $shipment->id) }}" method="POST" style="display:inline;">
             @csrf
-            {{-- <button type="submit" class="btn btn-sm btn-success" title="Confirm">
+            <button type="submit" class="btn btn-sm btn-success" title="Confirm">
                 <i class="bi bi-check"></i>
-            </button> --}}
+            </button>
         </form>
         <form action="#" method="POST" style="display:inline;">
             @csrf
