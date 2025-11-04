@@ -31,8 +31,8 @@
                             class="form-select @error('unit_user_id') is-invalid @enderror">
                             <option value="">Select User</option>
                             @foreach ($unit_user as $user)
-                            <option value="{{ $user->id }}" data-unit="{{ $user->unit_user_id }}" {{
-                                old('unit_user_id')==$user->id ? 'selected' : '' }}>
+                            <option value="{{ $user->id }}" data-unit="{{ $user->unit_id }}" {{
+                                old('unit_id')==$user->id ? 'selected' : '' }}>
                                 {{ $user->name }}
                             </option>
                             @endforeach
